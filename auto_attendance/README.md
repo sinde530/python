@@ -17,3 +17,21 @@ start {
   second_thumbnail: "image2.png",
   timer: "00:00",
 }
+
+#### installing
+```
+ pip install opencv-python image
+```
+
+#### Times
+```
+60 1m
+120 2m
+180 3m
+240 4m
+300 5m
+600 10m
+1200 20m
+2400 30m
+2460 31m
+```
