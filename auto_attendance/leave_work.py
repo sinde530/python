@@ -16,7 +16,7 @@ def leave_work(file_name):
         print("2번째의 이미지 파일을 소싱합니다.")
 
         # second image
-        leave_work_button1 = pyautogui.locateCenterOnScreen("image4.png")
+        leave_work_button1 = pyautogui.locateCenterOnScreen("image2.png")
         print("2", leave_work_button1)
 
         if leave_work_button1:
@@ -35,9 +35,9 @@ time.sleep(2)
 pyautogui.hotkey("alt", "tab", "tab", interval=0.1)
 
 # setTimeOut
-time.sleep(2460)
+time.sleep(1200)
 
-leave_work("image3.png")
+leave_work("image1.png")
 pyautogui.hotkey("winleft", "x")
 pyautogui.keyDown("u")
 pyautogui.keyDown("s")
