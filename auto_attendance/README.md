@@ -26,7 +26,7 @@ timer: "00:00",
 #### installing
 
 ```
- pip install opencv-python image pyautogui
+ pip install opencv-python image pyautogui datetime
 ```
 
 #### Times
