@@ -20,7 +20,7 @@ start {
 
 #### installing
 ```
- pip install opencv-python image
+ pip install opencv-python image pyautogui
 ```
 
 #### Times
@@ -32,6 +32,8 @@ start {
 300 5m
 600 10m
 1200 20m
-2400 30m
-2460 31m << Success
+1800 30m
+2400 40m
+2460 41m << Success
+3600 1h << Success
 ```

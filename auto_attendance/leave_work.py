@@ -35,7 +35,7 @@ time.sleep(2)
 pyautogui.hotkey("alt", "tab", "tab", interval=0.1)
 
 # setTimeOut 4h 37m : 4h 9m
-time.sleep(2460)
+time.sleep(3600)
 
 leave_work("image1.png")
 pyautogui.hotkey("winleft", "x")
