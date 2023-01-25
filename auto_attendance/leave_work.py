@@ -1,5 +1,8 @@
 import pyautogui
 import time
+from datetime import datetime
+
+now = datetime.now()
 
 
 def leave_work(file_name):
@@ -29,7 +32,7 @@ def leave_work(file_name):
             print("종료합니다.")
             return
 
-
+print(now.time())
 pyautogui.hotkey("winleft", "d")
 time.sleep(2)
 pyautogui.hotkey("alt", "tab", "tab", interval=0.1)
