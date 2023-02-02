@@ -16,6 +16,6 @@ def leave_work(file_name):
 
 
 # setTimeOut
-time.sleep(60)
+time.sleep(5)
 
 leave_work("image1.png")
