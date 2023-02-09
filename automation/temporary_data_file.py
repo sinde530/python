@@ -16,7 +16,7 @@ def login(groupware_url, username, password, browser):
         browser.maximize_window()
 
         # 소요할 시간
-        time.sleep(3720)
+        time.sleep(2)
 
         user_id = browser.find_element(By.ID, "gw_user_id")
         user_id.click()
@@ -50,7 +50,7 @@ def login(groupware_url, username, password, browser):
     finally:
         time.sleep(5)
         print("successfully Login")
-        os.system("shutdown /h")
+        # os.system("shutdown /h")
         print("------------------------- times", now.time())
         # subprocess.call("rundll32.exe powrprof.dll,SetSuspendState 0,1,0")
         # browser.quit()
@@ -113,15 +113,12 @@ def githubLogin(github_url, github_name, github_password):
 
 
 load_dotenv()
-
-groupware_url = os.environ.get("groupware_url")
-
-# groupware_url = "http://gw.meritium.co.kr"
-username = "se.kim"
-password = "*ksu02170331"
-github_url = "https://github.com/login"
-github_name = "sinde530"
-github_password = "*ksu02170331"
+groupware_url = os.environ.get("GROUPWARE_URL")
+username = os.environ.get("USERNAME")
+password = os.environ.get("PASSWORD")
+github_url = os.environ.get("GITHUB_URL")
+github_name = os.environ.get("GITHUB_ID")
+github_password = os.environ.get("GITHUB_PASSWORD")
 
 browser = webdriver.Chrome()
 now = datetime.now()
