@@ -17,7 +17,7 @@ def login(groupware_url, username, password, browser):
 
         # 소요할 시간
         time.sleep(3720)
-        
+
         user_id = browser.find_element(By.ID, "gw_user_id")
         user_id.click()
         user_id.send_keys(username)
@@ -32,14 +32,16 @@ def login(groupware_url, username, password, browser):
         login_btn.click()
         time.sleep(2)
 
-        go_to_work_btn = browser.find_element(By.XPATH, "//*[@id='Login_info']/p/img[1]")
+        go_to_work_btn = browser.find_element(
+            By.XPATH, "//*[@id='Login_info']/p/img[1]")
         go_to_work_btn.click()
         # go_to_leave_btn = browser.find_element(By.XPATH, "//*[@id='Login_info']/p/img[2]")
         # go_to_leave_btn.click()
         time.sleep(1)
         modal_close.accept()
         time.sleep(2)
-        my_desk_mtn = browser.find_element(By.XPATH, "//*[@id='MainNav']/li[6]/a")
+        my_desk_mtn = browser.find_element(
+            By.XPATH, "//*[@id='MainNav']/li[6]/a")
         my_desk_mtn.click()
     except NoSuchElementException as error:
         print("Error: Element not found.")
@@ -109,7 +111,8 @@ def githubLogin(github_url, github_name, github_password):
     # 메시지 사진 보내기
     # 메시지 보내기
 
-load.dotenv()
+
+load_dotenv()
 
 groupware_url = os.environ.get("groupware_url")
 
