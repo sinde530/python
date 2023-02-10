@@ -9,6 +9,10 @@ import os
 
 
 def login(groupware_url, username, password, browser):
+    print(groupware_url)
+    print(username)
+    print(password)
+    print(browser)
     try:
         print("------------------------- times", now.time())
 
@@ -114,7 +118,7 @@ def githubLogin(github_url, github_name, github_password):
 
 load_dotenv()
 groupware_url = os.environ.get("GROUPWARE_URL")
-username = os.environ.get("USERNAME")
+username = os.environ.get("EMAIL")
 password = os.environ.get("PASSWORD")
 github_url = os.environ.get("GITHUB_URL")
 github_name = os.environ.get("GITHUB_ID")
