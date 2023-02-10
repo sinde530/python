@@ -2,6 +2,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.alert import Alert
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from datetime import datetime
 from dotenv import load_dotenv
 import time
@@ -9,12 +11,8 @@ import os
 
 
 def login(groupware_url, username, password, browser):
-    print(groupware_url)
-    print(username)
-    print(password)
-    print(browser)
     try:
-        print("------------------------- times", now.time())
+        print("########## start time: ", now.time())
 
         browser.get(groupware_url)
         browser.maximize_window()
@@ -23,12 +21,10 @@ def login(groupware_url, username, password, browser):
         time.sleep(2)
 
         user_id = browser.find_element(By.ID, "gw_user_id")
-        user_id.click()
         user_id.send_keys(username)
         time.sleep(1)
 
         user_pw = browser.find_element(By.ID, "gw_user_pw")
-        user_pw.click()
         user_pw.send_keys(password)
         time.sleep(1)
 
@@ -47,6 +43,20 @@ def login(groupware_url, username, password, browser):
         my_desk_mtn = browser.find_element(
             By.XPATH, "//*[@id='MainNav']/li[6]/a")
         my_desk_mtn.click()
+
+        wait = WebDriverWait(browser, 10)
+        wait.until(EC.presence_of_element_located(
+            (By.XPATH, "//*[@id='Content']/table[1]")))
+
+        elements = browser.find_elements(By.XPATH, "//table[1]//td[2]")
+
+        for i in elements:
+            try:
+                pTagText = i.text
+                print(pTagText)
+            except Exception as e:
+                print(f"Error occured while trying to get attribute: {e}")
+
     except NoSuchElementException as error:
         print("Error: Element not found.")
         print(error)
@@ -54,54 +64,56 @@ def login(groupware_url, username, password, browser):
     finally:
         time.sleep(5)
         print("successfully Login")
-        # os.system("shutdown /h")
-        print("------------------------- times", now.time())
-        # subprocess.call("rundll32.exe powrprof.dll,SetSuspendState 0,1,0")
-        # browser.quit()
+
+        # checked function start
+        time.sleep(2)
+        githubLogin(github_url, github_name, github_password, pTagText)
+
+        print("########## exit time: ", now.time())
+        browser.quit()
+        
+        os.system("shutdown /h")
 
 
-def githubLogin(github_url, github_name, github_password):
+
+def githubLogin(github_url, github_name, github_password, pTagText):
     try:
         print("social login start")
         browser.get(github_url)
         browser.maximize_window()
 
         user_id = browser.find_element(By.ID, "login_field")
-        user_id.click()
         user_id.send_keys(github_name)
         time.sleep(1)
 
         user_pw = browser.find_element(By.ID, "password")
-        user_pw.click()
         user_pw.send_keys(github_password)
         time.sleep(1)
 
         login_btn = browser.find_element(
-            By.XPATH, "//*[@id='login']/div[4]/form/div/input[11]"
+            By.XPATH, "/html/body/div[1]/div[1]/header/div/div[2]/div/div/div[2]/div/div/form/div/input[11]"
         )
         login_btn.click()
         time.sleep(2)
 
-        user_profile = browser.find_element(
-            By.XPATH, "/html/body/div[1]/div[1]/header/div[7]/details/summary"
-        )
-        user_profile.click()
-        time.sleep(2)
+        add_file_button = browser.find_element(
+            By.XPATH, "//*[@id='repo-content-pjax-container']/div/div/div[3]/div[1]/div[2]/details")
+        add_file_button.click()
+        time.sleep(1)
 
-        your_profile = browser.find_element(
-            By.XPATH, "/html/body/div[1]/div[1]/header/div[7]/details/details-menu/a[1]"
-        )
-        your_profile.click()
-        time.sleep(2)
+        create_new_file_button = browser.find_element(
+            By.XPATH, "//*[@id='repo-content-pjax-container']/div/div/div[3]/div[1]/div[2]/details/div/ul/li[3]/form/button")
+        create_new_file_button.click()
+        time.sleep(1)
 
-        your_repository = browser.find_element(
-            By.XPATH, "/html/body/div[1]/div[5]/main/div[1]/div/div/div[2]/div/nav/a[2]"
-        )
-        your_repository.click()
-        time.sleep(2)
+        title_input = browser.find_element(
+            By.XPATH, "//*[@id='repo-content-pjax-container']/div/div/form[2]/div/div[1]/span/input")
+        # title_input.click()
+        title_input.send_keys("commit")
+        time.sleep(1)
 
-        your_repository_name = browser.find_element(By.LINK_TEXT, "leave_data")
-        your_repository_name.click()
+        commit_new_file_button = browser.find_element(By.ID, "submit-file")
+        commit_new_file_button.click()
 
         time.sleep(5)
         browser.quit()
