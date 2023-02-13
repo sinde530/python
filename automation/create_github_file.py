@@ -5,6 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from datetime import datetime, date
 from dotenv import load_dotenv
+from selenium.webdriver.common.keys import Keys
 import time
 import os
 
@@ -16,7 +17,7 @@ def githubLogin(github_url, github_name, github_password):
         browser.maximize_window()
 
         user_id = browser.find_element(By.ID, "login_field")
-        user_id.send_keys(github_name)      
+        user_id.send_keys(github_name)
         time.sleep(1)
 
         user_pw = browser.find_element(By.ID, "password")
@@ -42,6 +43,12 @@ def githubLogin(github_url, github_name, github_password):
         title_input = browser.find_element(
             By.XPATH, "//*[@id='repo-content-pjax-container']/div/div/form[2]/div/div[1]/span/input")
         title_input.send_keys(now_date)
+        time.sleep(1)
+
+        description = browser.find_element(
+            By.XPATH, "//*[@id='code-editor']/div/pre"
+        )
+        description.send_keys(Keys.CONTROL, 'v')
         time.sleep(1)
 
         commit_new_file_button = browser.find_element(By.ID, "submit-file")
