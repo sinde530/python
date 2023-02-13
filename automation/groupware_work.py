@@ -1,12 +1,11 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.alert import Alert
-from selenium.common.exceptions import NoSuchElementException
-from selenium.webdriver.common.keys import Keys
-# from datetime import datetime
-from datetime import datetime, date
-from dotenv import load_dotenv
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.alert import Alert
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from datetime import datetime, date
+from selenium import webdriver
+from dotenv import load_dotenv
 import time
 import os
 
@@ -39,12 +38,12 @@ def login(groupware_url, username, password, browser):
         # go_to_work_btn.click()
 
         # End
-        # go_to_leave_btn = browser.find_element(By.XPATH, "//*[@id='Login_info']/p/img[2]")
-        # go_to_leave_btn.click()
+        go_to_leave_btn = browser.find_element(By.XPATH, "//*[@id='Login_info']/p/img[2]")
+        go_to_leave_btn.click()
 
-        # time.sleep(1)
-        # modal_close.accept()
-        # time.sleep(2)
+        time.sleep(1)
+        modal_close.accept()
+        time.sleep(2)
 
         my_desk_mtn = browser.find_element(By.XPATH, "//*[@id='MainNav']/li[6]/a")
         my_desk_mtn.click()
@@ -57,16 +56,13 @@ def login(groupware_url, username, password, browser):
         print(error)
 
     finally:
-        time.sleep(5)
+        time.sleep(2)
         print("successfully Login")
 
 load_dotenv()
 groupware_url = os.environ.get("GROUPWARE_URL")
 username = os.environ.get("EMAIL")
 password = os.environ.get("PASSWORD")
-github_url = os.environ.get("GITHUB_URL")
-github_name = os.environ.get("GITHUB_ID")
-github_password = os.environ.get("GITHUB_PASSWORD")
 
 browser = webdriver.Chrome()
 now = datetime.now()

@@ -1,11 +1,11 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from datetime import datetime, date
-from dotenv import load_dotenv
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from datetime import datetime, date
+from selenium import webdriver
+from dotenv import load_dotenv
 import time
 import os
 
@@ -56,6 +56,8 @@ def githubLogin(github_url, github_name, github_password):
 
         time.sleep(5)
         browser.quit()
+
+        os.system("shutdown /h")
 
     except NoSuchElementException as error:
         print(error)
