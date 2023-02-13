@@ -9,7 +9,6 @@ from dotenv import load_dotenv
 import time
 import os
 
-
 def login(groupware_url, username, password, browser):
     try:
         print("########## start time: ", now.time())
