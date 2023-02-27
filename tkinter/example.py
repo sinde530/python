@@ -19,7 +19,7 @@ def main():
     console_log()
 
     root.title("Example Test GUI")
-    image_path = os.path.join(current_path(), "images/unicorn.ico")
+    image_path = os.path.join(current_path(), 'images/unicorn.ico')
 
     root.iconbitmap(image_path)
 
@@ -28,5 +28,5 @@ def main():
     root.mainloop()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
