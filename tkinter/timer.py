@@ -2,7 +2,7 @@ import time
 from tkinter import *
 
 
-def timer(hour, minute, second, root, search_func):
+def timer(hour, minute, second, root, search_func, login_information):
     try:
         temp = int(hour.get()) * 3600 + int(minute.get()) * 60 + int(second.get())
     except:
@@ -19,5 +19,7 @@ def timer(hour, minute, second, root, search_func):
         time.sleep(1)
         if temp == 0:
             search_func()
+            login_information()
+            print("timerrrrrrrrrrrrrrrrrrrrrrrrrrrr")
             break
         temp -= 1
