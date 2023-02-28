@@ -8,18 +8,19 @@ def search():
     browser = webdriver.Chrome()
     browser.get(url)
     browser.maximize_window()
-    time.sleep(2400)
+    time.sleep(10)
 
 
 root = tk.Tk()
+root.geometry("800x600")
 
 url_label = tk.Label(root, text="Enter URL:")
-url_label.pack()
+url_label.grid(row=0, column=0)
 
 url_entry = tk.Entry(root)
-url_entry.pack()
+url_entry.grid(row=0, column=1)
 
 search_button = tk.Button(root, text="Search", command=search)
-search_button.pack()
+search_button.grid(row=0, column=2)
 
 root.mainloop()
