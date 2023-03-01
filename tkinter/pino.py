@@ -50,13 +50,13 @@ def login(username, password):
         # modal_close.accept()
         # time.sleep(2)
 
-        my_desk_mtn = browser.find_element(By.XPATH, "//*[@id='MainNav']/li[6]/a")
-        my_desk_mtn.click()
+        my_desk_btn = browser.find_element(By.XPATH, "//*[@id='MainNav']/li[6]/a")
+        my_desk_btn.click()
 
         # ctrl a + c
-        # ActionChains(browser).key_down(Keys.CONTROL).send_keys("a").send_keys(
-        #     "c"
-        # ).key_up(Keys.CONTROL).perform()
+        ActionChains(browser).key_down(Keys.CONTROL).send_keys("a").send_keys(
+            "c"
+        ).key_up(Keys.CONTROL).perform()
 
     except NoSuchElementException as error:
         print("Error: Element not found.")
