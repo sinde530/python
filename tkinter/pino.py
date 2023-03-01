@@ -7,10 +7,10 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from datetime import datetime, date
 from selenium import webdriver
-import time
 
 
 browser = webdriver.Chrome()
+modal_close = Alert(browser)
 
 
 def search(url):
@@ -47,7 +47,7 @@ def login(username, password):
         # go_to_leave_btn.click()
 
         # time.sleep(1)
-        # modal_close.accept()
+        modal_close.accept()
         # time.sleep(2)
 
         my_desk_btn = browser.find_element(By.XPATH, "//*[@id='MainNav']/li[6]/a")
@@ -65,6 +65,3 @@ def login(username, password):
     finally:
         time.sleep(2)
         print("successfully Login")
-
-
-modal_close = Alert(browser)
