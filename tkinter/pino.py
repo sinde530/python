@@ -15,25 +15,25 @@ browser = webdriver.Chrome()
 
 def search(url):
     browser.get(url)
-    browser.implicitly_wait(10)
+    browser.implicitly_wait(60)
     print("searchhhhhhhhhhhhhh")
     browser.maximize_window()
     time.sleep(2)
 
 
-def login(username):
+def login(username, password):
     try:
         user_id = browser.find_element(By.ID, "gw_user_id")
         user_id.send_keys(username)
         time.sleep(1)
 
-        # user_pw = browser.find_element(By.ID, "gw_user_pw")
-        # user_pw.send_keys(password)
-        # time.sleep(1)
+        user_pw = browser.find_element(By.ID, "gw_user_pw")
+        user_pw.send_keys(password)
+        time.sleep(1)
 
-        # login_btn = browser.find_element(By.ID, "loginBtn")
-        # login_btn.click()
-        # time.sleep(2)
+        login_btn = browser.find_element(By.ID, "loginBtn")
+        login_btn.click()
+        time.sleep(2)
 
         # Start
         # go_to_work_btn = browser.find_element(
@@ -50,8 +50,8 @@ def login(username):
         # modal_close.accept()
         # time.sleep(2)
 
-        # my_desk_mtn = browser.find_element(By.XPATH, "//*[@id='MainNav']/li[6]/a")
-        # my_desk_mtn.click()
+        my_desk_mtn = browser.find_element(By.XPATH, "//*[@id='MainNav']/li[6]/a")
+        my_desk_mtn.click()
 
         # ctrl a + c
         # ActionChains(browser).key_down(Keys.CONTROL).send_keys("a").send_keys(
