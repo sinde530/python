@@ -24,8 +24,8 @@ def search_func():
 
 def login_information():
     username = login_id_input.get()
-    login(username)
-    print("login id")
+    userpassword = login_pw_input.get()
+    login(username, userpassword)
 
 
 def create_window():
@@ -35,6 +35,7 @@ def create_window():
     global minute
     global second
     global login_id_input
+    global login_pw_input
 
     root = Tk()
     root.geometry("800x600")
@@ -85,6 +86,10 @@ def create_window():
     login_id_label.grid(row=1, column=0)
     login_id_input = Entry(login_frame)
     login_id_input.grid(row=1, column=1)
+    login_pw_labe = Label(login_frame, text="Password")
+    login_pw_labe.grid(row=2, column=0)
+    login_pw_input = Entry(login_frame)
+    login_pw_input.grid(row=2, column=1)
 
 
 create_window()
