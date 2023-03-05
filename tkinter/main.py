@@ -1,7 +1,22 @@
 from tkinter import *
 from timer import timer
 from pino import search, login, github_login
+import json
 import os
+
+save_file = "config.json"
+
+
+if os.path.isfile(save_file):
+    with open(save_file, "r") as f:
+        save_value = json.load(f)
+else:
+    save_value = ""
+
+
+def save_file_value():
+    with open(save_file, "w") as f:
+        json.dump(save_value.get(), f)
 
 
 def current_path():
@@ -54,7 +69,7 @@ def create_window():
     hour = StringVar()
     minute = StringVar()
     second = StringVar()
-    url_value_save = StringVar()
+    url_value_save = StringVar(value=save_value)
 
     hour.set("00")
     minute.set("00")
@@ -121,4 +136,6 @@ def create_window():
 
 
 create_window()
+root.protocol("WM_DELETE_WINDOW", save_file_value)
+print(url_value_save.get())
 root.mainloop()
