@@ -20,7 +20,6 @@ def search_func():
     # http://gw.meritium.co.kr
     # https://github.com/sinde530/leave_data
     search(url)
-    print("3")
 
 
 def login_information():
