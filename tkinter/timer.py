@@ -20,6 +20,5 @@ def timer(hour, minute, second, root, search_func, login_information):
         if temp == 0:
             search_func()
             login_information()
-            print("timerrrrrrrrrrrrrrrrrrrrrrrrrrrr")
             break
         temp -= 1

@@ -7,7 +7,6 @@ from selenium.webdriver.common.alert import Alert
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from datetime import datetime, date
-from selenium import webdriver
 
 
 browser = webdriver.Chrome()
@@ -57,7 +56,6 @@ def login(username, password):
         my_desk_btn.click()
         browser.implicitly_wait(60)
 
-        # ctrl a + c
         ActionChains(browser).key_down(Keys.CONTROL).send_keys("a").send_keys(
             "c"
         ).key_up(Keys.CONTROL).perform()
