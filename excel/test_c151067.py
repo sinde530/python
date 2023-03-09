@@ -43,13 +43,18 @@ result_df_name = result_df[rows_name] == current_case
 # print(result_df_name)
 
 result_df_filter = result_df[result_df_name]
-# print(result_df_filter)
+# print("result_df_filter", result_df_filter)
 
-# 0  151067.0  패션잡화, 가방, 여성가방, 백팩  가방/잡화, 백팩/캐쥬얼가방, 백팩  상품_2.0   2.0  10000.0  ...           2.0    557349.0  176511.0        True      664345.0  true, S, 2023-03-08, 2023-05-18, 500, PR, 10, RT
+print("1", result_df_filter["카테고리1"])
+print("2", result_df_filter["카테고리2"])
+print("3", result_df_filter["추가구성/구성값_입력"])
+print("4", result_df_filter["테스트코드/발송정책"])
+print("5", result_df_filter["테스트코드/복수구매할인"])
 
-result_column = ["카테고리1","카테고리2","카테고리3"]
-result_data = result_df_filter[result_column]
-print(result_data)
+# result_column = ["카테고리1","카테고리2","판매기간"]
+# result_data = result_df_filter[result_column]
+# result_data = result_df_filter[result_column]
+# print(result_data)
 
 '''
 result_df_name은 True값을 반환함. / cle
@@ -58,14 +63,7 @@ array형식 columns 객체 뽑기 / cle
 Columns Data Parameterized
 '''
 
-mock_data = "패션잡화, 가방, 여성가방, 백팩"
-
-fd = result_data == mock_data
-print("1111111111111111", fd)
-
 #https://bigdaheta.tistory.com/41 여기 보니까 뭐 조건 설정해서 할수있던데 불러오는거
 def test_c151067():
     print("tqtqtqtq")
 
-
-#이거 집에서도 할수 있어여? 그대???????????????????????????????
