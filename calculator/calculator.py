@@ -1,4 +1,5 @@
 import tkinter as tk
+from buttons import calculator_buttons
 
 
 class Calculator:
@@ -9,29 +10,9 @@ class Calculator:
         self.result_entry = tk.Entry(self.master, width=20, font=("Arial", 16))
         self.result_entry.grid(row=0, column=0, columnspan=4)
 
-        # Buttons
-        buttons = [
-            "7",
-            "8",
-            "9",
-            "+",
-            "4",
-            "5",
-            "6",
-            "-",
-            "1",
-            "2",
-            "3",
-            "*",
-            "0",
-            ".",
-            "=",
-            "/",
-        ]
-
         row = 1
         col = 0
-        for input_text in buttons:
+        for input_text in calculator_buttons:
             button = tk.Button(
                 self.master,
                 text=input_text,
