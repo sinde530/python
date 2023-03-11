@@ -3,14 +3,17 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from datetime import datetime, date
+from datetime import datetime
 from selenium import webdriver
 from dotenv import load_dotenv
 import time
 import os
 
+
 def githubLogin(github_url, github_name, github_password):
-    now_date = datetime.fromordinal(datetime.today().toordinal()).strftime("day: %Y 년/%m 월/%d 일")
+    now_date = datetime.fromordinal(datetime.today().toordinal()).strftime(
+        "day: %Y 년/%m 월/%d 일"
+    )
     try:
         print("social login start")
         browser.get(github_url)
@@ -25,30 +28,35 @@ def githubLogin(github_url, github_name, github_password):
         time.sleep(1)
 
         login_btn = browser.find_element(
-            By.XPATH, "/html/body/div[1]/div[1]/header/div/div[2]/div/div/div[2]/div/div/form/div/input[11]"
+            By.XPATH,
+            "/html/body/div[1]/div[1]/header/div/div[2]/div/div/div[2]/div/div/form/div/input[11]",
         )
         login_btn.click()
         time.sleep(2)
 
         add_file_button = browser.find_element(
-            By.XPATH, "//*[@id='repo-content-pjax-container']/div/div/div[3]/div[1]/div[2]/details")
+            By.XPATH,
+            "//*[@id='repo-content-pjax-container']/div/div/div[2]/div[1]/div[2]/details",
+        )
         add_file_button.click()
         time.sleep(1)
 
         create_new_file_button = browser.find_element(
-            By.XPATH, "//*[@id='repo-content-pjax-container']/div/div/div[3]/div[1]/div[2]/details/div/ul/li[3]/form/button")
+            By.XPATH,
+            "//*[@id='repo-content-pjax-container']/div/div/div[2]/div[1]/div[2]/details/div/ul/li[3]/form/button",
+        )
         create_new_file_button.click()
         time.sleep(1)
 
         title_input = browser.find_element(
-            By.XPATH, "//*[@id='repo-content-pjax-container']/div/div/form[2]/div/div[1]/span/input")
+            By.XPATH,
+            "//*[@id='repo-content-pjax-container']/div/div/form[2]/div/div[1]/span/input",
+        )
         title_input.send_keys(now_date)
         time.sleep(1)
 
-        description = browser.find_element(
-            By.XPATH, "//*[@id='code-editor']/div/pre"
-        )
-        description.send_keys(Keys.CONTROL, 'v')
+        description = browser.find_element(By.XPATH, "//*[@id='code-editor']/div/pre")
+        description.send_keys(Keys.CONTROL, "v")
         time.sleep(1)
 
         commit_new_file_button = browser.find_element(By.ID, "submit-file")
