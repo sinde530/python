@@ -4,13 +4,12 @@ import tkinter as tk
 class Calculator:
     def __init__(self, master):
         self.master = master
-        self.master.title("계산기")
+        self.master.title("Calculator")
 
-        # 계산 결과를 표시할 엔트리 위젯
         self.result_entry = tk.Entry(self.master, width=20, font=("Arial", 16))
         self.result_entry.grid(row=0, column=0, columnspan=4)
 
-        # 버튼 생성
+        # Buttons
         buttons = [
             "7",
             "8",
@@ -30,7 +29,6 @@ class Calculator:
             "/",
         ]
 
-        # 버튼을 화면에 배치
         row = 1
         col = 0
         for input_text in buttons:
@@ -39,7 +37,7 @@ class Calculator:
                 text=input_text,
                 width=5,
                 height=2,
-                command=lambda text=input_text: self.button_click(text),
+                command=lambda text=input_text: self.handle_button_click(text),
             )
             button.grid(row=row, column=col)
             col += 1
@@ -48,23 +46,33 @@ class Calculator:
                 row += 1
 
         clear_button = tk.Button(
-            self.master, text="C", width=5, height=2, command=self.clear
+            self.master,
+            text="C",
+            width=5,
+            height=2,
+            command=self.handle_clear_button_click,
         )
         clear_button.grid(row=5, column=0)
 
-    def button_click(self, text):
+    def handle_button_click(self, text):
         if text == "=":
-            try:
-                result = str(eval(self.result_entry.get()))
-                self.result_entry.delete(0, tk.END)
-                self.result_entry.insert(tk.END, result)
-            except:
-                self.result_entry.delete(0, tk.END)
-                self.result_entry.insert(tk.END, "write the value")
+            self.calculate()
         else:
-            self.result_entry.insert(tk.END, text)
+            self.handle_text_click(text)
 
-    def clear(self):
+    def calculate(self):
+        try:
+            result = str(eval(self.result_entry.get()))
+            self.result_entry.delete(0, tk.END)
+            self.result_entry.insert(tk.END, result)
+        except:
+            self.result_entry.delete(0, tk.END)
+            self.result_entry.insert(tk.END, "Error")
+
+    def handle_text_click(self, button_text):
+        self.result_entry.insert(tk.END, button_text)
+
+    def handle_clear_button_click(self):
         self.result_entry.delete(0, tk.END)
 
 
