@@ -43,7 +43,7 @@ class ActionSearchBing(Action):
         search_query = tracker.latest_message['text']
 
         headers = {
-            'Ocp-Apim-Subscription-Key': 'YOUR_API_KEY_HERE'
+            'Ocp-Apim-Subscription-Key': 'A04B44E5C70846D3AFE6D937EC43DB6B'
         }
 
         params = {
