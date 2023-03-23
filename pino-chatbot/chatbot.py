@@ -3,18 +3,18 @@ import nltk
 from nltk.chat.util import Chat, reflections
 
 pairs = [
-    ['hi', ['Hello!', 'Hi there!']],
-    ['what is your name?', ['My name is Chatbot.']],
-    ['bye', ['Goodbye!', 'Bye!']]
+    ["hi", ["Hello!", "Hi there!"]],
+    ["what is your name?", ["My name is Chatbot."]],
+    ["bye", ["Goodbye!", "Bye!"]],
 ]
 
 # Load data from a JSON file
-with open('data.json', 'r') as f:
+with open("data.json", "r") as f:
     data = json.load(f)
 
 # Load user inputs from a JSON file
 try:
-    with open('user_inputs.json', 'r') as f:
+    with open("user_inputs.json", "r") as f:
         user_inputs = json.load(f)
 except FileNotFoundError:
     user_inputs = []
@@ -22,12 +22,12 @@ except FileNotFoundError:
 
 def save_user_input(user_input, bot_response):
     # Append the new user input to the list
-    user_inputs.append(
-        {'user_input': user_input, 'bot_response': bot_response})
+    user_inputs.append({"user_input": user_input, "bot_response": bot_response})
 
     # Write the updated list to the JSON file
-    with open('user_inputs.json', 'w') as f:
+    with open("user_inputs.json", "w") as f:
         json.dump(user_inputs, f)
+
 
 # 1
 # def chatbot_response(user_input):
@@ -87,13 +87,16 @@ def chatbot_response(user_input):
     save_user_input(user_input, bot_response)
 
     # If the bot's response is a prompt, wait for the next user input
-    if "Please try asking a different question or providing more information." in bot_response:
+    if (
+        "Please try asking a different question or providing more information."
+        in bot_response
+    ):
         return bot_response
 
     return bot_response
 
 
 while True:
-    user_input = input('You: ')
+    user_input = input("You: ")
     bot_response = chatbot_response(user_input)
-    print('Bot:', bot_response)
+    print("Bot:", bot_response)
