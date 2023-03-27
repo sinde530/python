@@ -44,15 +44,11 @@ def chatbot_response(user_input):
                 else:
                     bot_response = data[user_input]
             else:
-                bot_response = "I'm sorry, I'm not sure. Please try asking a different question or providing more information."
-
                 search_results = search_bing(user_input, num_results=3)
                 if search_results:
-                    bot_response += "\n\nHere are some links that might help:\n"
-                    for result in search_results:
-                        bot_response += f"\n- {result}"
-
-                bot_response += "\n\nWould you like me to add this to my knowledge base?"
+                    bot_response = search_results[0]
+                else:
+                    bot_response = "I'm sorry, I'm not sure. Please try asking a different question or providing more information."
 
         else:
             save_user_input(user_input, bot_response)

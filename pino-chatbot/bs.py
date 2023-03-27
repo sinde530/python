@@ -12,9 +12,9 @@ def search_bing(query, num_results=3):
     soup = BeautifulSoup(response.content, "html.parser")
     results = soup.find_all("li", class_="b_algo")[:num_results]
 
-    links = []
+    summaries = []
     for result in results:
-        link = result.find("a").get("href")
-        links.append(link)
+        summary = result.find("p").get_text()
+        summaries.append(summary)
 
-    return links
+    return summaries
