@@ -1,10 +1,10 @@
 import random
 import json
 import datetime
+from bs import search_bing
 from flask import Flask, request, render_template
 from flask_cors import CORS, cross_origin
 from nltk.chat.util import Chat, reflections
-from googlesearch import search
 import re
 
 app = Flask(__name__)
@@ -18,6 +18,7 @@ pairs = [
     ["what is your name?", ["My name is Chatbot."]],
     ["bye", ["Goodbye!", "Bye!"]],
     ["what is the current date?", [f"The current date is {current_date}."]],
+    ["what is an apple?", ["An apple is a round fruit with a red, green, or yellow skin and a white, juicy interior. It is a popular fruit and can be eaten raw or used in cooking and baking."]]
 ]
 
 user_inputs = []
@@ -45,7 +46,7 @@ def chatbot_response(user_input):
             else:
                 bot_response = "I'm sorry, I'm not sure. Please try asking a different question or providing more information."
 
-                search_results = list(search(user_input, num_results=3))
+                search_results = search_bing(user_input, num_results=3)
                 if search_results:
                     bot_response += "\n\nHere are some links that might help:\n"
                     for result in search_results:

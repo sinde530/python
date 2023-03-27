@@ -22,50 +22,12 @@ except FileNotFoundError:
 
 def save_user_input(user_input, bot_response):
     # Append the new user input to the list
-    user_inputs.append({"user_input": user_input, "bot_response": bot_response})
+    user_inputs.append(
+        {"user_input": user_input, "bot_response": bot_response})
 
     # Write the updated list to the JSON file
     with open("user_inputs.json", "w") as f:
         json.dump(user_inputs, f)
-
-
-# 1
-# def chatbot_response(user_input):
-#     # Use the Chat class from nltk to generate a response
-#     chatbot = Chat(pairs, reflections)
-#     bot_response = chatbot.respond(user_input)
-
-#     # If the response from the Chat class is not empty, return it
-#     if bot_response:
-#         return bot_response
-
-#     # Check if the user's input matches a key in the data file
-#     if user_input in data:
-#         bot_response = data[user_input]
-#     else:
-#         bot_response = "I'm sorry, I'm not sure. Please try asking a different question."
-
-#     # Save the user input and bot response to the JSON file
-#     save_user_input(user_input, bot_response)
-#     return bot_response
-
-# 2
-# def chatbot_response(user_input):
-#     chatbot = Chat(pairs, reflections)
-#     bot_response = chatbot.respond(user_input)
-
-#     if bot_response:
-#         return bot_response
-
-#     if user_input in data:
-#         bot_response = data[user_input]
-#     elif "how are you" in user_input.lower():
-#         bot_response = "I'm doing well, thank you for asking!"
-#     else:
-#         bot_response = "I'm sorry, I'm not sure. Please try asking a different question."
-
-#     save_user_input(user_input, bot_response)
-#     return bot_response
 
 
 def chatbot_response(user_input):

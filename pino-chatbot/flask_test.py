@@ -63,7 +63,8 @@ def chatbot_response(user_input, confirm_message, new_data):
 
 
 def save_user_input(user_input, bot_response):
-    user_inputs.append({"user_input": user_input, "bot_response": bot_response})
+    user_inputs.append(
+        {"user_input": user_input, "bot_response": bot_response})
 
     with open("user_inputs.json", "w", encoding="utf-8") as f:
         json.dump(user_inputs, f, ensure_ascii=False)
