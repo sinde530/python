@@ -3,8 +3,14 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
-from selenium.common.exceptions import WebDriverException, UnexpectedAlertPresentException, \
-    ElementClickInterceptedException, NoAlertPresentException, ElementNotInteractableException
+from selenium.common.exceptions import (
+    WebDriverException,
+    UnexpectedAlertPresentException,
+    ElementClickInterceptedException,
+    NoAlertPresentException,
+    ElementNotInteractableException,
+)
+from selenium.webdriver.support.ui import Select
 from tkinter import *
 import numpy
 import time, datetime
@@ -13,7 +19,7 @@ from pytesseract import image_to_string
 import os
 
 opt = webdriver.ChromeOptions()
-opt.add_argument('window-size=800,600')
+opt.add_argument("window-size=800,600")
 # driver = webdriver.Chrome(executable_path=os.getcwd() + "\\es\\chromedriver.exe", options=opt)
 driver = webdriver.Chrome()
 wait = WebDriverWait(driver, 10)
@@ -31,13 +37,21 @@ def login_go():
 
 
 def link_go():
-    driver.get('http://poticket.interpark.com/Book/BookSession.asp?GroupCode=' + showcode_entry.get())
+    driver.get(
+        "http://poticket.interpark.com/Book/BookSession.asp?GroupCode="
+        + showcode_entry.get()
+    )
 
 
 def link_test():
-    driver.get('http://poticket.interpark.com/Book/BookSession.asp?GroupCode=' + showcode_entry.get())
+    driver.get(
+        "http://poticket.interpark.com/Book/BookSession.asp?GroupCode="
+        + showcode_entry.get()
+    )
     driver.switch_to.frame(driver.find_element(By.ID, "ifrmBookStep"))
-    driver.execute_script("document.querySelectorAll('.calCont').forEach(function(a) {a.remove()})")
+    driver.execute_script(
+        "document.querySelectorAll('.calCont').forEach(function(a) {a.remove()})"
+    )
 
 
 def seat_macro():
@@ -46,27 +60,45 @@ def seat_macro():
     driver.switch_to.frame(seat1_frame)
     seat2_frame = driver.find_element(By.NAME, "ifrmSeatDetail")
     driver.switch_to.frame(seat2_frame)
-    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'img[src="http://ticketimage.interpark.com/TMGSNAS/TMGS/G/1_90.gif"]')))
-    seats = driver.find_elements(By.CSS_SELECTOR, 'img[src="http://ticketimage.interpark.com/TMGSNAS/TMGS/G/1_90.gif"]')
+    wait.until(
+        EC.presence_of_element_located(
+            (
+                By.CSS_SELECTOR,
+                'img[src="http://ticketimage.interpark.com/TMGSNAS/TMGS/G/2_90.gif"]',
+                # 'img[src="http://ticketimage.interpark.com/TMGSNAS/TMGS/G/1_90.gif"]',
+            )
+        )
+    )
+    seats = driver.find_elements(
+        By.CSS_SELECTOR,
+        'img[src="http://ticketimage.interpark.com/TMGSNAS/TMGS/G/2_90.gif"]',
+        # 'img[src="http://ticketimage.interpark.com/TMGSNAS/TMGS/G/1_90.gif"]',
+    )
+
     print(len(seats))
     vip_list = []
     vip2_list = []
     vip3_list = []
+    vip4_list = []
     for i in seats:
-        if "B블록2열" in i.get_attribute("title"):
+        if "B구역2열" in i.get_attribute("title"):
             vip_list.append(i)
-        elif "B블록3열" in i.get_attribute("title"):
+        elif "B구역3열" in i.get_attribute("title"):
             vip2_list.append(i)
-        elif "B블록4열" in i.get_attribute("title"):
+        elif "B구역4열" in i.get_attribute("title"):
             vip3_list.append(i)
+        elif "A구역4열" in i.get_attribute("title"):
+            vip4_list.append(i)
     print("2열 : ", len(vip_list))
     print("3열 : ", len(vip2_list))
     print("4열 : ", len(vip3_list))
+    print("A구역4열 : ", len(vip4_list))
     shot = 0
     shot1 = 0
     shot2 = 0
     shot3 = 0
-    for x in range(0, len(vip_list) + len(vip2_list) + len(vip3_list)):
+    shot4 = 0
+    for x in range(0, len(vip_list) + len(vip2_list) + len(vip3_list) + len(vip4_list)):
         try:
             print("2열")
             vip_list[x].click()
@@ -114,14 +146,34 @@ def seat_macro():
                     shot += 1
                     shot3 += 1
                 except:
-                    print("예외")
-                    break
+                    try:
+                        print("A구역 - 4열")
+                        if x == 1 and shot4 == 0:
+                            x = 0
+                        elif x == 1 and shot4 == 1:
+                            x = 1
+                        elif x == 2 and shot4 == 0:
+                            x = 0
+                        elif x == 2 and shot4 == 1:
+                            x = 1
+                        elif x == 2 and shot4 == 2:
+                            x = 2
+
+                        vip4_list[x].click()
+                        shot += 1
+                        shot2 += 1
+                        shot3 += 1
+                        shot4 += 1
+                    except:
+                        print("예외")
+                        break
         if shot == int(ticket_entry.get()):
             print("종료")
             break
         # elif shot >= ) and :
 
     print("종료 종료")
+
 
 def captcha():
     driver.switch_to.default_content()
@@ -134,7 +186,9 @@ def captcha():
     image = cv.imread(os.getcwd() + "\\captcha.png")
     # Set a threshold value for the image, and save
     image = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
-    image = cv.adaptiveThreshold(image, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 91, 1)
+    image = cv.adaptiveThreshold(
+        image, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 91, 1
+    )
     kernel = cv.getStructuringElement(cv.MORPH_RECT, (3, 3))
     image = cv.morphologyEx(image, cv.MORPH_OPEN, kernel, iterations=1)
 
@@ -145,27 +199,51 @@ def captcha():
         if area < 50:
             cv.drawContours(image, [c], -1, (0, 0, 0), -1)
     kernel2 = numpy.array([[-1, -1, -1], [-1, 9, -1], [-1, -1, -1]])
+
     image = cv.filter2D(image, -1, kernel2)
     result = 255 - image
+
     captcha_text = image_to_string(result)
-    print(captcha_text)
+    print("captcha_text: ", captcha_text)
     driver.switch_to.default_content()
     driver.switch_to.frame(seat1_frame)
     driver.find_element(By.CLASS_NAME, "validationTxt").click()
-    dirver.find_element(By.ID, "txtCaptcha").send_keys(captcha_text)
-    if driver.find_element(By.XPATH, '//*[@id="divRecaptcha"]/div[1]/div[3]/div').is_displayed() == 1:
-        driver.execute_script('fnCapchaRefresh()')
+    driver.find_element(By.ID, "txtCaptcha").send_keys(captcha_text)
+    if (
+        driver.find_element(
+            By.XPATH, '//*[@id="divRecaptcha"]/div[1]/div[3]/div'
+        ).is_displayed()
+        == 1
+    ):
+        driver.execute_script("fnCapchaRefresh()")
         captcha()
     while 1:
         global wait
         try:
-            if driver.find_element(By.XPATH, '//*[@id="divRecaptcha"]/div[1]/div[3]/div').is_displayed() == 1:
-                driver.execute_script('fnCapchaRefresh()')
+            if (
+                driver.find_element(
+                    By.XPATH, '//*[@id="divRecaptcha"]/div[1]/div[3]/div'
+                ).is_displayed()
+                == 1
+            ):
+                driver.execute_script("fnCapchaRefresh()")
                 captcha()
             wait = WebDriverWait(driver, 0)
+
+            try:
+                select_element = driver.find_element(
+                    By.XPATH, '//*[@id="PriceRow001"]/td[3]/select'
+                )
+                select = Select(select_element)
+                select.select_by_value("1")
+                # select.select_by_visible_text("1매")
+                print("해당 요소가 존재합니다.")
+            except NoSuchElementException:
+                print("해당 요소가 존재하지 않습니다.")
+
             go2()
         except:
-            driver.execute_script('fnCapchaRefresh()')
+            driver.execute_script("fnCapchaRefresh()")
             captcha()
             wait = WebDriverWait(driver, 0)
             go2()
@@ -179,9 +257,13 @@ def date_select():
             pass
         elif int(calender_entry.get()) >= 1:
             for i in range(1, int(calender_entry.get()) + 1):
-                driver.find_element(By.XPATH, "/html/body/div/div[1]/div[1]/div/span[3]").click()
+                driver.find_element(
+                    By.XPATH, "/html/body/div/div[1]/div[1]/div/span[3]"
+                ).click()
         try:
-            driver.find_element(By.XPATH, '(//*[@id="CellPlayDate"])' + "[" + date_entry.get() + "]").click()
+            driver.find_element(
+                By.XPATH, '(//*[@id="CellPlayDate"])' + "[" + date_entry.get() + "]"
+            ).click()
             break
         except NoSuchElementException:
             link_go()
@@ -192,45 +274,106 @@ def date_select():
             go()
             break
     # 회차
-    wait.until(EC.element_to_be_clickable(
-        (By.XPATH, '/html/body/div/div[3]/div[1]/div/span/ul/li[' + round_entry.get() + ']/a'))).click()
+    wait.until(
+        EC.element_to_be_clickable(
+            (
+                By.XPATH,
+                "/html/body/div/div[3]/div[1]/div/span/ul/li["
+                + round_entry.get()
+                + "]/a",
+            )
+        )
+    ).click()
     driver.switch_to.default_content()
-    driver.find_element(By.ID, 'LargeNextBtnImage').click()
+    driver.find_element(By.ID, "LargeNextBtnImage").click()
 
 
 def seat_again():
     driver.switch_to.default_content()
-    driver.switch_to.frame(driver.find(By.ID, "ifrmSeat"))
+    driver.switch_to.frame(driver.find_element(By.ID, "ifrmSeat"))
     driver.execute_script('$("ifrmSeatDetail").contentWindow.location.reload();')
-    driver.execute_script('fnInitSeat();')
+    driver.execute_script("fnInitSeat();")
     seat_macro()
     driver.switch_to.default_content()
     driver.switch_to.frame(driver.find_element(By.ID, "ifrmSeat"))
-    driver.find_element(By.ID, 'NextStepImage').click()
+    driver.find_element(By.ID, "NextStepImage").click()
+
+    try:
+        select_element = driver.find_element(
+            By.XPATH, '//*[@id="PriceRow001"]/td[3]/select'
+        )
+        select = Select(select_element)
+        # select.select_by_value("1")
+        select.select_by_visible_text("1매")
+        print("해당 요소가 존재합니다.")
+    except NoSuchElementException:
+        print("해당 요소가 존재하지 않습니다.")
 
 
 def go2():
+    print("11111111111")
     seat_macro()
+    print("22222222222")
     driver.switch_to.default_content()
+    print("3333333333")
     driver.switch_to.frame(driver.find_element(By.ID, "ifrmSeat"))
-    driver.find_element(By.ID, 'NextStepImage').click()
+    print("444444444444")
+
+    try:
+        select_element = driver.find_element(
+            By.XPATH, '//*[@id="PriceRow001"]/td[3]/select'
+        )
+        select = Select(select_element)
+        select.select_by_value("1")
+        # select.select_by_visible_text("1매")
+        print("해당 요소가 존재합니다.")
+    except NoSuchElementException:
+        print("해당 요소가 존재하지 않습니다.")
+
+    driver.find_element(By.ID, "NextStepImage").click()
+
+    try:
+        select_element = driver.find_element(
+            By.XPATH, '//*[@id="PriceRow001"]/td[3]/select'
+        )
+        select = Select(select_element)
+        # select.select_by_value("1")
+        select.select_by_visible_text("1매")
+        print("해당 요소가 존재합니다.")
+    except NoSuchElementException:
+        print("해당 요소가 존재하지 않습니다.")
+
     print("이선좌")
     while True:
         try:
             seat_again()
-            print("가1")
+            print("151515151515")
         except UnexpectedAlertPresentException:
-            print("나")
+            print("252525252525")
         except NoSuchElementException:
             break
         except ElementNotInteractableException:
             break
 
+
 def go():
     code_time.delete(0, END)
     start_time = time.time()
+
+    try:
+        select_element = driver.find_element(
+            By.XPATH, '//*[@id="PriceRow001"]/td[3]/select'
+        )
+        select = Select(select_element)
+        # select.select_by_value("1")
+        select.select_by_visible_text("1매")
+        print("해당 요소가 존재합니다.")
+    except NoSuchElementException:
+        print("해당 요소가 존재하지 않습니다.")
+
     try:
         print("가2")
+
         # driver.find_element(By.CLASS_NAME, "closeBtn").click()
         date_select()
         try:
@@ -257,15 +400,46 @@ def go():
 def all_go():
     global wait
     wait = WebDriverWait(driver, 10)
+
+    try:
+        select_element = driver.find_element(
+            By.XPATH, '//*[@id="PriceRow001"]/td[3]/select'
+        )
+        select = Select(select_element)
+        # select.select_by_value("1")
+        select.select_by_visible_text("1매")
+        print("해당 요소가 존재합니다.")
+    except NoSuchElementException:
+        print("해당 요소가 존재하지 않습니다.")
+
     link_go()
     go()
 
 
 def credit():
+    print("555555555555")
+
+    try:
+        select_element = driver.find_element(
+            By.XPATH, '//*[@id="PriceRow001"]/td[3]/select'
+        )
+        select = Select(select_element)
+        # select.select_by_value("1")
+        select.select_by_visible_text("1매")
+        print("해당 요소가 존재합니다.")
+    except NoSuchElementException:
+        print("해당 요소가 존재하지 않습니다.")
+
     driver.switch_to.default_content()
+    print("66666666666")
+
+    print("7777777777")
+
     driver.find_element(By.XPATH, '//*[@id="SmallNextBtnImage"]').click()
     driver.switch_to.frame(driver.find_element(By.XPATH, '//*[@id="ifrmBookStep"]'))
-    wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="YYMMDD"]'))).send_keys(birth_entry.get())
+    wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="YYMMDD"]'))).send_keys(
+        birth_entry.get()
+    )
     driver.switch_to.default_content()
     driver.find_element(By.XPATH, '//*[@id="SmallNextBtnImage"]').click()
     bank2 = bank_var.get()
@@ -278,8 +452,12 @@ def credit():
 
 def bank():
     driver.switch_to.frame(driver.find_element(By.XPATH, '//*[@id="ifrmBookStep"]'))
-    wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="Payment_22004"]/td/input'))).click()
-    wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="BankCode"]/option[7]'))).click()
+    wait.until(
+        EC.element_to_be_clickable((By.XPATH, '//*[@id="Payment_22004"]/td/input'))
+    ).click()
+    wait.until(
+        EC.element_to_be_clickable((By.XPATH, '//*[@id="BankCode"]/option[7]'))
+    ).click()
     driver.switch_to.default_content()
     driver.find_element(By.XPATH, '//*[@id="SmallNextBtnImage"]').click()
     driver.switch_to.frame(driver.find_element(By.XPATH, '//*[@id="ifrmBookStep"]'))
@@ -290,7 +468,9 @@ def bank():
 
 def kakao():
     driver.switch_to.frame(driver.find_element(By.XPATH, '//*[@id="ifrmBookStep"]'))
-    wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="Payment_22084"]/td/input'))).click()
+    wait.until(
+        EC.element_to_be_clickable((By.XPATH, '//*[@id="Payment_22084"]/td/input'))
+    ).click()
     driver.switch_to.default_content()
     driver.find_element(By.XPATH, '//*[@id="SmallNextBtnImage"]').click()
     driver.switch_to.frame(driver.find_element(By.XPATH, '//*[@id="ifrmBookStep"]'))
@@ -300,7 +480,7 @@ def kakao():
 
 
 def clock_time():
-    clock = time.strftime('%X')
+    clock = time.strftime("%X")
     time_label.config(text=clock)
     time_label.after(1, clock_time)
 
@@ -308,19 +488,18 @@ def clock_time():
 def full_auto():
     time2 = 0
     while True:
-        time1 = time.strftime('%X')
+        time1 = time.strftime("%X")
         if time1 != time2:
             print(time1)
         elif time1 == full_entry.get():
             all_go()
             break
-        time2 = time.strftime('%X')
-
+        time2 = time.strftime("%X")
 
 
 dp = Tk()
 main_frame = Frame(dp)
-dp.geometry('300x450')
+dp.geometry("300x450")
 dp.title("인터파크 티켓팅 프로그램")
 main_frame.pack()
 
@@ -372,7 +551,7 @@ ticket_entry.grid(row=8, column=1)
 link_button = Button(main_frame, text="직링", command=link_go, height=2)
 link_button.grid(row=9, column=0, sticky=E)
 
-all_button = Button(main_frame, text='시작', command=all_go, height=2)
+all_button = Button(main_frame, text="시작", command=all_go, height=2)
 all_button.grid(row=9, column=1, sticky=W + E)
 
 chair_button = Button(main_frame, text="좌석", command=go2, height=2)
@@ -384,15 +563,15 @@ start_button.grid(row=10, column=0, sticky=E)
 credit_button = Button(main_frame, text="결제", command=credit, height=2)
 credit_button.grid(row=10, column=1, sticky=W + E)
 
-captcha_button = Button(main_frame, text='캡챠', command=captcha, height=2)
+captcha_button = Button(main_frame, text="캡챠", command=captcha, height=2)
 captcha_button.grid(row=10, column=2, sticky=W)
 
 bank_var = IntVar(value=0)
-bank_check = Checkbutton(main_frame, text='무통장', variable=bank_var)
+bank_check = Checkbutton(main_frame, text="무통장", variable=bank_var)
 bank_check.grid(row=9, column=3)
 
 kakao_var = IntVar(value=0)
-kakao_check = Checkbutton(main_frame, text='카카오', variable=kakao_var)
+kakao_check = Checkbutton(main_frame, text="카카오", variable=kakao_var)
 kakao_check.grid(row=10, column=3)
 
 credit2_button = Button(main_frame, text="자동 예매", command=full_auto, height=2)
@@ -407,20 +586,22 @@ full_entry.grid(row=13, column=1)
 time_label = Label(main_frame, height=2)
 time_label.grid(row=14, column=1)
 
-birth_label = Label(main_frame, text='생년월일')
+birth_label = Label(main_frame, text="생년월일")
 birth_label.grid(row=15, column=0)
 
 birth_entry = Entry(main_frame)
 birth_entry.grid(row=15, column=1)
 
-code_label = Label(main_frame, text='소요시간')
+code_label = Label(main_frame, text="소요시간")
 code_label.grid(row=16, column=0)
 
 code_time = Entry(main_frame)
 code_time.grid(row=16, column=1)
 
-full_time = (datetime.datetime.combine(datetime.date(1, 1, 1), datetime.datetime.now().time()) + datetime.timedelta(
-    seconds=20)).time()
+full_time = (
+    datetime.datetime.combine(datetime.date(1, 1, 1), datetime.datetime.now().time())
+    + datetime.timedelta(seconds=20)
+).time()
 
 clock_time()
 dp.mainloop()
