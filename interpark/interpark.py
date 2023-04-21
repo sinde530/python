@@ -13,7 +13,8 @@ from selenium.common.exceptions import (
 from selenium.webdriver.support.ui import Select
 from tkinter import *
 import numpy
-import time, datetime
+import time
+import datetime
 import cv2 as cv
 from pytesseract import image_to_string
 import os
@@ -262,7 +263,8 @@ def date_select():
                 ).click()
         try:
             driver.find_element(
-                By.XPATH, '(//*[@id="CellPlayDate"])' + "[" + date_entry.get() + "]"
+                By.XPATH, '(//*[@id="CellPlayDate"])' +
+                "[" + date_entry.get() + "]"
             ).click()
             break
         except NoSuchElementException:
@@ -291,7 +293,8 @@ def date_select():
 def seat_again():
     driver.switch_to.default_content()
     driver.switch_to.frame(driver.find_element(By.ID, "ifrmSeat"))
-    driver.execute_script('$("ifrmSeatDetail").contentWindow.location.reload();')
+    driver.execute_script(
+        '$("ifrmSeatDetail").contentWindow.location.reload();')
     driver.execute_script("fnInitSeat();")
     seat_macro()
     driver.switch_to.default_content()
@@ -436,7 +439,8 @@ def credit():
     print("7777777777")
 
     driver.find_element(By.XPATH, '//*[@id="SmallNextBtnImage"]').click()
-    driver.switch_to.frame(driver.find_element(By.XPATH, '//*[@id="ifrmBookStep"]'))
+    driver.switch_to.frame(driver.find_element(
+        By.XPATH, '//*[@id="ifrmBookStep"]'))
     wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="YYMMDD"]'))).send_keys(
         birth_entry.get()
     )
@@ -451,30 +455,38 @@ def credit():
 
 
 def bank():
-    driver.switch_to.frame(driver.find_element(By.XPATH, '//*[@id="ifrmBookStep"]'))
+    driver.switch_to.frame(driver.find_element(
+        By.XPATH, '//*[@id="ifrmBookStep"]'))
     wait.until(
-        EC.element_to_be_clickable((By.XPATH, '//*[@id="Payment_22004"]/td/input'))
+        EC.element_to_be_clickable(
+            (By.XPATH, '//*[@id="Payment_22004"]/td/input'))
     ).click()
     wait.until(
         EC.element_to_be_clickable((By.XPATH, '//*[@id="BankCode"]/option[7]'))
     ).click()
     driver.switch_to.default_content()
     driver.find_element(By.XPATH, '//*[@id="SmallNextBtnImage"]').click()
-    driver.switch_to.frame(driver.find_element(By.XPATH, '//*[@id="ifrmBookStep"]'))
-    wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="checkAll"]'))).click()
+    driver.switch_to.frame(driver.find_element(
+        By.XPATH, '//*[@id="ifrmBookStep"]'))
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="checkAll"]'))).click()
     driver.switch_to.default_content()
     driver.find_element(By.XPATH, '//*[@id="LargeNextBtnImage"]').click()
 
 
 def kakao():
-    driver.switch_to.frame(driver.find_element(By.XPATH, '//*[@id="ifrmBookStep"]'))
+    driver.switch_to.frame(driver.find_element(
+        By.XPATH, '//*[@id="ifrmBookStep"]'))
     wait.until(
-        EC.element_to_be_clickable((By.XPATH, '//*[@id="Payment_22084"]/td/input'))
+        EC.element_to_be_clickable(
+            (By.XPATH, '//*[@id="Payment_22084"]/td/input'))
     ).click()
     driver.switch_to.default_content()
     driver.find_element(By.XPATH, '//*[@id="SmallNextBtnImage"]').click()
-    driver.switch_to.frame(driver.find_element(By.XPATH, '//*[@id="ifrmBookStep"]'))
-    wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="checkAll"]'))).click()
+    driver.switch_to.frame(driver.find_element(
+        By.XPATH, '//*[@id="ifrmBookStep"]'))
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="checkAll"]'))).click()
     driver.switch_to.default_content()
     driver.find_element(By.XPATH, '//*[@id="LargeNextBtnImage"]').click()
 
@@ -599,7 +611,8 @@ code_time = Entry(main_frame)
 code_time.grid(row=16, column=1)
 
 full_time = (
-    datetime.datetime.combine(datetime.date(1, 1, 1), datetime.datetime.now().time())
+    datetime.datetime.combine(datetime.date(
+        1, 1, 1), datetime.datetime.now().time())
     + datetime.timedelta(seconds=20)
 ).time()
 
