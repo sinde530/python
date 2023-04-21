@@ -17,7 +17,7 @@ def login(groupware_url, username, password, browser):
         browser.maximize_window()
 
         # 소요할 시간
-        time.sleep(2400)
+        time.sleep(3600)
 
         user_id = browser.find_element(By.ID, "gw_user_id")
         user_id.send_keys(username)
