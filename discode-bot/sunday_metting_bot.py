@@ -28,7 +28,9 @@ scheduler = AsyncIOScheduler()  # APScheduler 스케줄러 생성
 async def scheduled_message():
     await client.wait_until_ready()
     channel = client.get_channel(int(sunday_channel_id))  # 알림을 보낼 디스코드 채널 ID 입력
-    await channel.send("@everyone 매주 일요일 10시에 회의가 있습니다. 참석해주세요!")  # 알림 메시지 내용 입력
+    await channel.send(
+        "@everyone 매주 일요일 10시에 #라운지 에서 회의가 있습니다. 참석해주세요!"
+    )  # 알림 메시지 내용 입력
 
 
 @client.event
