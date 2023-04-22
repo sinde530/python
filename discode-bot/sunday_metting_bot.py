@@ -33,10 +33,20 @@ async def scheduled_message():
     )  # 알림 메시지 내용 입력
 
 
+async def send_notification():
+    await client.wait_until_ready()
+    channel = client.get_channel(int(sunday_channel_id))
+    print(channel)
+    await channel.send("마지막 메시지 도착!")
+
+
 @client.event
 async def on_ready():
     print(f"{client.user}로 로그인하였습니다.")
     print(client.user.id)
+
+    start_time = datetime.now(timezone("Asia/Seoul")) + timedelta(minutes=1)
+    scheduler.add_job(send_notification, "date", run_date=start_time)
 
     scheduler.start()
 
