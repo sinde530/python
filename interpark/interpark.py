@@ -236,11 +236,10 @@ def captcha():
                     By.XPATH, '//*[@id="PriceRow001"]/td[3]/select'
                 )
                 select = Select(select_element)
-                select.select_by_value("1")
-                # select.select_by_visible_text("1매")
-                print("해당 요소가 존재합니다.")
+                select.select_by_value(ticket_entry.get())
+                print("captcha: 해당 요소가 존재합니다.")
             except NoSuchElementException:
-                print("해당 요소가 존재하지 않습니다.")
+                print("captcha: 해당 요소가 존재하지 않습니다.")
 
             go2()
         except:
@@ -267,6 +266,7 @@ def date_select():
                 "[" + date_entry.get() + "]"
             ).click()
             break
+
         except NoSuchElementException:
             link_go()
             go()
@@ -306,45 +306,34 @@ def seat_again():
             By.XPATH, '//*[@id="PriceRow001"]/td[3]/select'
         )
         select = Select(select_element)
-        # select.select_by_value("1")
-        select.select_by_visible_text("1매")
-        print("해당 요소가 존재합니다.")
+        select.select_by_value(ticket_entry.get())
+        print("seat_again: 해당 요소가 존재합니다.")
     except NoSuchElementException:
-        print("해당 요소가 존재하지 않습니다.")
+        print("seat_again: 해당 요소가 존재하지 않습니다.")
 
 
 def go2():
+    # 뭐지 1111111이건 왜 안찍지
+    # 씁 2,3,4는 찍는데1은 안찍네요?뭐지
     print("11111111111")
     seat_macro()
     print("22222222222")
-    driver.switch_to.default_content()
+    driver.switch_to.default_content()  # 프레임 변경
     print("3333333333")
     driver.switch_to.frame(driver.find_element(By.ID, "ifrmSeat"))
     print("444444444444")
 
-    try:
-        select_element = driver.find_element(
-            By.XPATH, '//*[@id="PriceRow001"]/td[3]/select'
-        )
-        select = Select(select_element)
-        select.select_by_value("1")
-        # select.select_by_visible_text("1매")
-        print("해당 요소가 존재합니다.")
-    except NoSuchElementException:
-        print("해당 요소가 존재하지 않습니다.")
+    # 지원님 살려주세요 몇매 살껀지 알수있는 페이지 함수가 어딘지 모르겠어요;;; 그거 전부 제가 쓴거일텐데
+    # 헐
+    # 23002291
+    # try:
+    #     wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="PriceRow001"]/td[3]/select'))).send_keys(
+    #         ticket_entry.get()
+    #     )
+    # except NoSuchElementException:
+    #     print("Ec 해당 요소가 존재하지 않습니다.")
 
     driver.find_element(By.ID, "NextStepImage").click()
-
-    try:
-        select_element = driver.find_element(
-            By.XPATH, '//*[@id="PriceRow001"]/td[3]/select'
-        )
-        select = Select(select_element)
-        # select.select_by_value("1")
-        select.select_by_visible_text("1매")
-        print("해당 요소가 존재합니다.")
-    except NoSuchElementException:
-        print("해당 요소가 존재하지 않습니다.")
 
     print("이선좌")
     while True:
@@ -368,11 +357,10 @@ def go():
             By.XPATH, '//*[@id="PriceRow001"]/td[3]/select'
         )
         select = Select(select_element)
-        # select.select_by_value("1")
-        select.select_by_visible_text("1매")
-        print("해당 요소가 존재합니다.")
+        select.select_by_value(ticket_entry.get())
+        print("go: 해당 요소가 존재합니다.")
     except NoSuchElementException:
-        print("해당 요소가 존재하지 않습니다.")
+        print("go: 해당 요소가 존재하지 않습니다.")
 
     try:
         print("가2")
@@ -409,29 +397,49 @@ def all_go():
             By.XPATH, '//*[@id="PriceRow001"]/td[3]/select'
         )
         select = Select(select_element)
-        # select.select_by_value("1")
-        select.select_by_visible_text("1매")
-        print("해당 요소가 존재합니다.")
+        select.select_by_value(ticket_entry.get())
+        print("all_go: 해당 요소가 존재합니다.")
     except NoSuchElementException:
-        print("해당 요소가 존재하지 않습니다.")
+        print("all_go: 해당 요소가 존재하지 않습니다.")
 
     link_go()
     go()
 
 
 def credit():
+    '''
+    23002291
+    0
+    2
+    1
+    1
+    '''
+    # xpath못찾는 이유가 뭘까요?
+    # 그 프레임전환할떄 저거말고 또 뭐 셀레니움에서 건들거나 그런거는 없었져? iframe하나 있긴해여
+    # 이열
     print("555555555555")
+    # driver.switch_to.default_content()  # 요기 했는데?.. 안해도 똑같네 어이가없네 진짜
+    # driver.switch_to.frame(driver.find_element(
+    #     By.XPATH, '//*[@id="ifrmBookStep"]'))  # 오 찍히네?? 근데 왜 NoSuchFrameException에 있지
+
+    # test = driver.switch_to.frame(driver.find_element(
+    #     By.XPATH, '//*[@id="divCouponList"]/table/tbody/tr[1]/td[2]/strong').get_attribute("innerText"))
+    # print(test)
 
     try:
-        select_element = driver.find_element(
-            By.XPATH, '//*[@id="PriceRow001"]/td[3]/select'
-        )
-        select = Select(select_element)
-        # select.select_by_value("1")
-        select.select_by_visible_text("1매")
-        print("해당 요소가 존재합니다.")
+        driver.switch_to.default_content()
+        driver.switch_to.frame(driver.find_element(
+            By.XPATH, '//*[@id="ifrmBookStep"]'))
+
+        select = Select(driver.switch_to.frame(driver.find_element(
+            By.XPATH, '//*[@id="PriceRow001"]/td[3]/select')))
+        select.select_by_value(ticket_entry.get())
+
+        print("go2: 해당 요소가 존재합니다.")
     except NoSuchElementException:
-        print("해당 요소가 존재하지 않습니다.")
+        print("go2: 해당 요소가 존재하지 않습니다.")
+
+    time.sleep(1)
 
     driver.switch_to.default_content()
     print("66666666666")
