@@ -7,8 +7,8 @@ from rembg import remove
 from PIL import Image
 
 def main():
-    input_file = './t4.jpeg'
-    output_file = './t4_output.png'
+    input_file = './sandals.jpeg'
+    output_file = './sandals_output.png'
     input = Image.open(input_file)
     output = remove(input)
     output.save(output_file)
